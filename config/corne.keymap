@@ -29,6 +29,35 @@
             tapping-term-ms = <200>;
             flavor = "tap-preferred";
         };
+
+        hold_layer: hold_layer {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOLD_LAYER";
+            #binding-cells = <2>;
+            bindings = <&mo>, <&kp>;
+
+            tapping-term-ms = <300>;
+            flavor = "tap-preferred";
+        };
+    };
+
+    combos {
+        compatible = "zmk,combos";
+
+        esc {
+            bindings = <&kp ESCAPE>;
+            key-positions = <13 22>;
+        };
+
+        minus {
+            bindings = <&kp MINUS>;
+            key-positions = <4 7>;
+        };
+
+        underscore {
+            bindings = <&kp UNDERSCORE>;
+            key-positions = <28 31>;
+        };
     };
 
     keymap {
@@ -42,29 +71,14 @@
             //                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
 
             bindings = <
-&kp TAB         &kp Q         &kp W            &kp E                &kp R              &kp T        &kp Y    &kp U               &kp I                 &kp O             &kp P            &kp BSPC
-&kp LEFT_SHIFT  &hml LCTRL A  &hml LEFT_ALT S  &hml LEFT_COMMAND D  &hml LEFT_SHIFT F  &kp G        &kp H    &hmr RIGHT_SHIFT J  &hmr RIGHT_COMMAND K  &hmr RIGHT_ALT L  &hmr RCTRL SEMI  &kp SQT
-&kp LCTRL       &kp Z         &kp X            &kp C                &kp V              &kp B        &kp N    &kp M               &kp COMMA             &kp DOT           &kp FSLH         &kp ESC
-                                               &kp LGUI             &mo 1              &kp SPACE    &kp RET  &mo 2               &kp RALT
+&kp ESCAPE      &kp Q         &kp W            &kp F                &kp P                &kp B                            &kp J                          &kp L                    &kp U                 &kp Y             &kp SQT       &kp BSPC
+&kp LEFT_SHIFT  &hml LCTRL A  &hml LEFT_ALT R  &hml LEFT_COMMAND S  &hml LEFT_SHIFT T    &hml LA(LC(LG(LEFT_SHIFT))) G    &mt RS(RA(RC(RIGHT_SHIFT))) M  &hmr RIGHT_SHIFT N       &hmr RIGHT_COMMAND E  &hmr RIGHT_ALT I  &hmr RCTRL O  &kp LG(TAB)
+&mo 4           &kp Z         &kp X            &kp C                &kp D                &kp V                            &kp K                          &kp H                    &kp COMMA             &kp DOT           &kp FSLH      &none
+                                               &mo 2                &hold_layer 3 SPACE  &kp TAB                          &hold_layer 0 ENTER            &hold_layer 1 BACKSPACE  &hold_layer 5 DELETE
             >;
         };
 
-        lower_layer {
-            // -----------------------------------------------------------------------------------------
-            // |  TAB |  1  |  2  |  3  |  4  |  5  |   |  6  |  7  |  8  |  9  |  0  | BKSP |
-            // | BTCLR| BT1 | BT2 | BT3 | BT4 | BT5 |   | LFT | DWN |  UP | RGT |     |      |
-            // | SHFT |     |     |     |     |     |   |     |     |     |     |     |      |
-            //                    | GUI |     | SPC |   | ENT |     | ALT |
-
-            bindings = <
-&kp ESC           &kp N1        &kp N2        &kp N3        &kp N4        &kp N5          &kp N6    &kp N7    &kp N8    &kp N9     &kp N0  &kp BSPC
-&mo 3             &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &kp LEFT  &kp DOWN  &kp UP    &kp RIGHT  &trans  &trans
-&kp LEFT_CONTROL  &trans        &trans        &trans        &trans        &trans          &trans    &trans    &trans    &trans     &trans  &trans
-                                              &kp LGUI      &trans        &kp SPACE       &kp RET   &trans    &kp RALT
-            >;
-        };
-
-        raise_layer {
+        sym {
             // -----------------------------------------------------------------------------------------
             // |  TAB |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  (  |  )  | BKSP |
             // | CTRL |     |     |     |     |     |   |  -  |  =  |  [  |  ]  |  \  |  `   |
@@ -72,19 +86,46 @@
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
             bindings = <
-&kp ESC           &kp EXCL  &kp AT  &kp HASH  &kp DLLR  &kp PRCNT    &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR  &kp RPAR  &kp BSPC
-&kp LEFT_SHIFT    &trans    &trans  &trans    &trans    &trans       &kp MINUS  &kp EQUAL  &kp LBKT   &kp RBKT  &kp BSLH  &kp GRAVE
-&kp LEFT_CONTROL  &trans    &trans  &trans    &trans    &trans       &kp UNDER  &kp PLUS   &kp LBRC   &kp RBRC  &kp PIPE  &kp TILDE
-                                    &kp LGUI  &trans    &kp SPACE    &kp RET    &trans     &kp RALT
+&trans  &none              &none      &kp ASTERISK  &kp AMPERSAND    &none       &none   &none   &none   &none  &none  &none
+&trans  &kp DOUBLE_QUOTES  &kp CARET  &kp PERCENT   &kp DOLLAR       &kp PLUS    &none   &none   &none   &none  &none  &none
+&trans  &kp TILDE          &kp HASH   &kp AT_SIGN   &kp EXCLAMATION  &kp PIPE    &none   &none   &none   &none  &none  &none
+                                      &trans        &trans           &trans      &trans  &trans  &trans
             >;
         };
 
-        layer_3 {
+        nav {
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans      &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans      &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &bt BT_CLR  &bt BT_CLR_ALL
-                        &trans  &trans  &trans    &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &kp LEFT_BRACE    &kp RIGHT_BRACE    &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &kp LEFT          &kp DOWN           &kp UP                &kp RIGHT              &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp LESS_THAN         &kp GREATER_THAN       &none
+                        &trans  &trans  &trans    &trans  &trans            &trans
+            >;
+        };
+
+        num {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans    &trans        &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans        &kp NUMBER_4  &kp NUMBER_5  &kp NUMBER_6  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &kp NUMBER_0  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &trans  &trans
+                        &trans  &trans  &trans    &trans        &trans        &trans
+            >;
+        };
+
+        bluetooth {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans    &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &bt BT_CLR
+&trans  &trans  &trans  &trans  &trans  &trans    &trans        &trans        &trans        &trans        &trans        &bt BT_CLR_ALL
+&trans  &trans  &trans  &trans  &trans  &trans    &trans        &trans        &trans        &trans        &trans        &trans
+                        &trans  &trans  &trans    &trans        &trans        &trans
+            >;
+        };
+
+        func {
+            bindings = <
+&trans  &kp F7  &kp F8  &kp F9  &kp F12  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &kp F4  &kp F5  &kp F6  &kp F11  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &kp F1  &kp F2  &kp F3  &kp F10  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+                        &trans  &trans   &trans    &trans  &trans  &trans
             >;
         };
     };
